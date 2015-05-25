@@ -1,6 +1,6 @@
 SOURCES	= boot.bin payload.bin
 
-all: bootsector
+all: clean bootsector
 
 floppy.img:
 	/sbin/mkdosfs -F 12 -s 2 -C floppy.img 1440
@@ -19,4 +19,4 @@ clean:
 	fasm $<
 
 run: all
-	qemu-system-x86_64 -monitor stdio -display sdl -fda floppy.img -net none 
+	qemu-system-x86_64 -monitor stdio -vga std -fda floppy.img -net none 
