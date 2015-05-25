@@ -113,8 +113,8 @@ output: db "Payload loaded.", 13, 10, 0
 str_no_a20:	db "A20 not supported by bios", 13, 10, 0
 gfx_choices:	db 13, 10, "1. 800x600", 13, 10, "2. 1024x768", 13, 10, "3. 1280x1024", 13, 10, "Enter a choice: ", 0
 
-width:	dw ?
-height:	dw ?
+width:	dd ?
+height:	dd ?
 
 new_gdt:
 	;Null entry
