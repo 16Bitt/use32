@@ -1,19 +1,23 @@
 	use32
 
+include "inc/args.h"
+
 p_entry:
-	mov ax, 0xFFFF
+	push dword 0xFFFF
 	call cls
 
-	mov eax, 0
-	mov ebx, 0
-	mov ecx, 400
-	mov edx, 300
-	mov esi, 0xF00F
+	push dword 0
+	push dword 0
+	push dword 400
+	push dword 300
+	push dword 0x0FF0
 	call rect
 
-	mov eax, 400
-	mov ebx, 300
-	mov esi, 0x0FF0
+	push dword 400
+	push dword 300
+	push dword 400
+	push dword 300
+	push dword 0xF00F
 	call rect
 
 	cli

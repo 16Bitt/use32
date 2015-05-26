@@ -63,13 +63,13 @@ use800x600:
 	mov ax, 0x114
 	jmp query_done
 use1024x768:
-	mov word [height], 1024
-	mov word [width], 768
+	mov word [height], 768
+	mov word [width], 1024
 	mov ax, 0x117
 	jmp query_done
 use1280x1024:
-	mov word [height], 1280
-	mov word [width], 1024
+	mov word [height], 1024
+	mov word [width], 1280
 	mov ax, 0x11A
 	jmp query_done
 query_done:
