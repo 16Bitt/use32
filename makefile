@@ -20,3 +20,6 @@ clean:
 
 run: all
 	qemu-system-x86_64 -monitor stdio -vga std -fda floppy.img -net none 
+
+bochs: all
+	bochs -q
