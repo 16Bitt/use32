@@ -3,7 +3,7 @@
 ;Start the heap
 ; -- => --
 init_heap:
-	mov eax, kernel_end
+	mov eax, 0x800000
 	mov [heap_loc], eax
 	ret
 

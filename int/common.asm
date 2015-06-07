@@ -25,5 +25,9 @@ err_instruction:
 
 err_instruction_str: db "Bad instruction!", 0
 
-err_ghost:
+err_page_fault:
+	draw_text err_page_fault_str, 0, 1, 1
+	hlt
 	jmp isr_done
+
+err_page_fault_str: db "PAGE FAULT!!!", 0

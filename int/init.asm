@@ -88,7 +88,6 @@ init_idt:
 	
 	;Initialize the IDT
 	lidt [idt_main_descriptor]
-	sti
 	
 	;Map common handlers
 	push 0
@@ -103,8 +102,8 @@ init_idt:
 	push 0x6
 	push err_instruction
 	call int_map
-	push 0x20
-	push err_ghost
+	push 14
+	push err_page_fault
 	call int_map
 
 	mov esp, ebp
