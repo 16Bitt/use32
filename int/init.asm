@@ -39,13 +39,79 @@ isr_common_stub:
 
 	iret
 
+macro outb port, value {
+	mov al, value
+	out port, al
+	call io_wait
+}
+
+io_wait:
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	in al, 0x10 + 0xC
+	ret
+
 init_idt:
 	push ebp
 	mov ebp, esp
+	
+	;Remap everything in the interrupt controller (messy)
+	outb 0x20, 0x11
+	outb 0xA0, 0x11
+	outb 0x21, 0x20
+	outb 0xA1, 0x28
+	outb 0x21, 0x04
+	outb 0xA1, 0x02
+	outb 0x21, 0x01
+	outb 0xA1, 0x01
+	outb 0x21, 0
+	outb 0xA1, 0
+
+	;Initialize a blank jump table
+	push 4 * 256
+	call malloc
+	mov [idt_handlers], eax
+	push eax
+	push 0
+	push 4 * 256
+	call memset
+	
+	;Initialize the IDT
 	lidt [idt_main_descriptor]
+	sti
+	
+	;Map common handlers
+	push 0
+	push err_div_by_zero
+	call int_map
+	push 1
+	push err_debug
+	call int_map
+	push 0xD
+	push err_gpf
+	call int_map
+	push 0x6
+	push err_instruction
+	call int_map
+	push 0x20
+	push err_ghost
+	call int_map
+
 	mov esp, ebp
 	pop ebp
 	ret
+
+idt_handlers: dd 0
 
 idt_main_descriptor:
 	dw (8 * 256) - 1	;idt limit
