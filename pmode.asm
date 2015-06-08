@@ -3,16 +3,16 @@
 include "inc/args.h"
 include "inc/rect.h"
 include "inc/text.h"
+include "inc/color.h"
 
 p_entry:
 	call init_heap
 	call init_paging
 	call init_idt
 
-	push dword 0xFFFF
+	to565 27, 27, 27
+	push eax
 	call cls
-	rectangle 0, 0, 400, 300, 0xF00F
-	rectangle 400, 300, 400, 300, 0x0FF0
 	
 	;The default keyboard handler
 	push 0x21
