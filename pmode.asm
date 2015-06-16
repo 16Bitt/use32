@@ -11,7 +11,6 @@ p_entry:
 	call init_idt
 
 	to565 27, 27, 27
-	push eax
 	call cls
 	
 	;The default keyboard handler
